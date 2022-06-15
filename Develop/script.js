@@ -9,31 +9,50 @@ var generateBtn = document.querySelector("#generate");
 
 //function to generate password
 function generatePassword () {
+  var totalArray =[];
+
   //prompt user for password criteria (8-128 char, upper/lower/num/speChar)
   var passwordLength = prompt("How long would you like your password to be?");
     if (passwordLength < 8) {
       prompt("You must choose at least 8 characters.")
+      return;
     }
     if (passwordLength > 128) {
       prompt("You cannot choose more than 128 characters.")
+      return;
     }
-  var chooseUpper = prompt("Would you like to include uppercase letters?");
-    if (chooseUpper === "yes")
 
-  var chooseLower = prompt("Would you like to include lowercase letters?");
-    if (chooseLower === "yes")
+  var chooseUpper = confirm("Would you like to include uppercase letters?");
+    if (chooseUpper) {
+      totalArray = totalArray.concat(upperCase)
+    } else { }
 
-  var chooseNum = prompt("Would you like to include numbers?");
-    if (chooseNum === "yes")
+  var chooseLower = confirm("Would you like to include lowercase letters?");
+    if (chooseLower) {
+      totalArray = totalArray.concat(lowerCase)
+    } else { }
 
-  var chooseSpecialChar = prompt("Would you like to include special characters?")
-    if (chooseSpecialChar === "yes")
-  //validate input
+  var chooseNum = confirm("Would you like to include numbers?");
+    if (chooseNum) {
+      totalArray = totalArray.concat(num)
+    } else { }
 
-  //generate password
+  var chooseSpecialChar = confirm("Would you like to include special characters?")
+    if (chooseSpecialChar) {
+      totalArray = totalArray.concat(specialChar)
+    } else { }
 
+    //generate password
+    var randomPw = ""
+    for (var i = 0; i < passwordLength; i++) {
+      var randomNum = Math.floor(Math.random()*totalArray.length)
+  
+      var randomChar = totalArray[randomNum];
+      randomPw += randomChar;
+    }
+  
   //display password
-  return;
+  return randomPw;
 }
 
 // Write password to the #password input
